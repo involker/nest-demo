@@ -22,12 +22,14 @@ let UserService = class UserService {
     add(user) {
         return this.userRepository.insert(user);
     }
-    query(user) {
-        return this.userRepository.find({
+    query(user, page) {
+        return this.userRepository.findAndCount({
             select: ['account', 'password', 'id', 'nickName'],
             where: {
                 account: user.account || null
-            }
+            },
+            skip: (page.size) * (page.current - 1),
+            take: page.size
         });
     }
     update(user) {

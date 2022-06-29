@@ -24,8 +24,16 @@ let UserController = class UserController {
         res.send({ rspDesc: '操作成功', data: null, rspCode: 'success' });
     }
     async query(request, res) {
-        const result = await this.userService.query(request.body);
-        res.send({ rspDesc: '操作成功', data: result, rspCode: 'success' });
+        const { current = 1, size = 10 } = request.body;
+        const [records, total] = await this.userService.query(request.body, { size, current });
+        res.send({
+            rspDesc: '操作成功', data: {
+                records,
+                total,
+                current,
+                size
+            }, rspCode: 'success'
+        });
     }
     async update(request, res) {
         await this.userService.update(request.body);

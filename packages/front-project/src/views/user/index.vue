@@ -4,7 +4,7 @@
     <div>
       <a-button type="primary" @click="onAdd">添加用户</a-button>
     </div>
-    <a-table :columns="columns" :data="list">
+    <a-table :columns="columns" :data="list" :pagination="false">
       <template #op="{ record }">
         <a-popconfirm content="确定删除?" @ok="onDel(record)">
           <a-button status="danger">删除</a-button>
@@ -17,6 +17,7 @@
         >
       </template>
     </a-table>
+    <a-pagination :total="page.total" v-model="page.current" :page-size="page.size" @change="onPageChange"/>
     <a-modal :visible="visible" title="新增" @cancel="onClose" :footer="false">
       <dialogForm @close="onClose" :injectData="dialogData" v-if="visible" />
     </a-modal>
@@ -34,6 +35,11 @@ export default {
   },
   data() {
     return {
+      page: {
+        current: 1,
+        size: 10,
+        total: 0,
+      },
       dialogData: {},
       visible: false,
       list: [],
@@ -82,13 +88,21 @@ export default {
       const res = await UserApi.delUser({ id: row.id });
       this.getList();
     },
+    onPageChange(current){
+      this.page.current = current;
+      this.onSearch();
+    },
     onSearch(param) {
-      this.filter = { ...param };
+      const { current, size } = this.page;
+      this.filter = { ...param, current, size };
       this.getList();
     },
     async getList() {
       const res = await UserApi.getUserList(this.filter);
-      this.list = res.data || [];
+      this.list = res.data.records || [];
+      this.page.current = res.data.current;
+      this.page.size = res.data.size;
+      this.page.total = res.data.total;
     },
   },
 };

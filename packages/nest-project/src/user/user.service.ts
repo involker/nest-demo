@@ -1,6 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
+import Page from "../interface/page";
 
 @Injectable()
 export class UserService {
@@ -12,12 +13,14 @@ export class UserService {
   add(user: User) {
     return this.userRepository.insert(user);
   }
-  query(user: User) {
-    return this.userRepository.find({
+  query(user: User, page: Page) {
+    return this.userRepository.findAndCount({
       select: ['account', 'password', 'id', 'nickName'],
       where: {
         account: user.account || null
-      }
+      },
+      skip: (page.size) * (page.current - 1),
+      take: page.size
     });
   }
   update(user: User) {
