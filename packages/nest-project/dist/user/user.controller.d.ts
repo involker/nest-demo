@@ -1,11 +1,16 @@
 import { UserService } from './user.service';
-import { Request, Response } from 'express';
+import { Request } from 'express';
 export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
-    add(request: Request, res: Response): Promise<void>;
-    query(request: Request, res: Response): Promise<void>;
-    update(request: Request, res: Response): Promise<void>;
-    del(request: Request, res: Response): Promise<void>;
-    detail(request: Request, res: Response): Promise<void>;
+    add(request: Request): Promise<any>;
+    query(request: Request): Promise<{
+        records: import("./entities/user.entity").User[];
+        total: number;
+        current: any;
+        size: any;
+    }>;
+    update(request: Request): Promise<any>;
+    del(request: Request): Promise<any>;
+    detail(request: Request): Promise<import("./entities/user.entity").User>;
 }

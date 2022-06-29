@@ -19,78 +19,71 @@ let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
     }
-    async add(request, res) {
+    async add(request) {
         await this.userService.add(request.body);
-        res.send({ rspDesc: '操作成功', data: null, rspCode: 'success' });
+        return null;
     }
-    async query(request, res) {
+    async query(request) {
         const { current = 1, size = 10 } = request.body;
         const [records, total] = await this.userService.query(request.body, { size, current });
-        res.send({
-            rspDesc: '操作成功', data: {
-                records,
-                total,
-                current,
-                size
-            }, rspCode: 'success'
-        });
+        return {
+            records,
+            total,
+            current,
+            size
+        };
     }
-    async update(request, res) {
+    async update(request) {
         await this.userService.update(request.body);
-        res.send({ rspDesc: '操作成功', data: null, rspCode: 'success' });
+        return null;
     }
-    async del(request, res) {
+    async del(request) {
         await this.userService.del(request.body);
-        res.send({ rspDesc: '操作成功', data: null, rspCode: 'success' });
+        return null;
     }
-    async detail(request, res) {
+    async detail(request) {
         const result = await this.userService.detail(request.body.id);
-        res.send({ rspDesc: '操作成功', data: result, rspCode: 'success' });
+        return result;
     }
 };
 __decorate([
     (0, common_1.Post)('add'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Req)()),
-    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "add", null);
 __decorate([
     (0, common_1.Post)('query'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Req)()),
-    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "query", null);
 __decorate([
     (0, common_1.Post)('update'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Req)()),
-    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "update", null);
 __decorate([
     (0, common_1.Post)('del'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Req)()),
-    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "del", null);
 __decorate([
     (0, common_1.Post)('detail'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Req)()),
-    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "detail", null);
 UserController = __decorate([
