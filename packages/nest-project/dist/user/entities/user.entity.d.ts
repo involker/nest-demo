@@ -3,4 +3,6 @@ export declare class User {
     account: string;
     password: string;
     nickName: string;
+    createTime: Date;
+    updateTime: Date;
 }

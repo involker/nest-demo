@@ -56,6 +56,7 @@ export default {
         } else {
           res = await UserApi.addUser(this.form);
         }
+        this.$message.success(res.rspDesc)
         this.$emit("close", true);
       });
     },

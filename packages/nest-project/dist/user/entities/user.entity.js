@@ -29,6 +29,18 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], User.prototype, "nickName", void 0);
+__decorate([
+    (0, typeorm_1.CreateDateColumn)({
+        comment: "创建时间"
+    }),
+    __metadata("design:type", Date)
+], User.prototype, "createTime", void 0);
+__decorate([
+    (0, typeorm_1.CreateDateColumn)({
+        comment: "更新时间"
+    }),
+    __metadata("design:type", Date)
+], User.prototype, "updateTime", void 0);
 User = __decorate([
     (0, typeorm_1.Entity)()
 ], User);

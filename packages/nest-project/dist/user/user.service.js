@@ -24,7 +24,6 @@ let UserService = class UserService {
     }
     query(user, page) {
         return this.userRepository.findAndCount({
-            select: ['account', 'password', 'id', 'nickName'],
             where: {
                 account: user.account || null
             },
@@ -33,7 +32,7 @@ let UserService = class UserService {
         });
     }
     update(user) {
-        return this.userRepository.save(user);
+        return this.userRepository.save(Object.assign(Object.assign({}, user), { updateTime: new Date() }));
     }
     del(user) {
         return this.userRepository.delete(user);

@@ -6,7 +6,14 @@ export declare class UserService {
     constructor(userRepository: Repository<User>);
     add(user: User): Promise<import("typeorm").InsertResult>;
     query(user: User, page: Page): Promise<[User[], number]>;
-    update(user: User): Promise<User>;
+    update(user: User): Promise<{
+        updateTime: Date;
+        id: number;
+        account: string;
+        password: string;
+        nickName: string;
+        createTime: Date;
+    } & User>;
     del(user: User): Promise<import("typeorm").DeleteResult>;
     detail(id: number): Promise<User>;
 }

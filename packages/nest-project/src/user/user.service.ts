@@ -15,7 +15,6 @@ export class UserService {
   }
   query(user: User, page: Page) {
     return this.userRepository.findAndCount({
-      select: ['account', 'password', 'id', 'nickName'],
       where: {
         account: user.account || null
       },
@@ -24,7 +23,7 @@ export class UserService {
     });
   }
   update(user: User) {
-    return this.userRepository.save(user);
+    return this.userRepository.save({ ...user, updateTime: new Date() });
   }
   del(user: User) {
     return this.userRepository.delete(user);
