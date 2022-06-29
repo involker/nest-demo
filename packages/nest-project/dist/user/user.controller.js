@@ -15,12 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
 const user_service_1 = require("./user.service");
+const create_user_dto_1 = require("./dto/create-user.dto");
+const validation_pipe_1 = require("./validation.pipe");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
     }
-    async add(request) {
-        await this.userService.add(request.body);
+    async add(createUserDto) {
+        await this.userService.add(createUserDto);
         return null;
     }
     async query(request) {
@@ -49,9 +51,9 @@ let UserController = class UserController {
 __decorate([
     (0, common_1.Post)('add'),
     (0, common_1.HttpCode)(200),
-    __param(0, (0, common_1.Req)()),
+    __param(0, (0, common_1.Body)(new validation_pipe_1.ValidationPipe())),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "add", null);
 __decorate([

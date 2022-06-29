@@ -1,9 +1,10 @@
 import { UserService } from './user.service';
 import { Request } from 'express';
+import { CreateUserDto } from "./dto/create-user.dto";
 export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
-    add(request: Request): Promise<any>;
+    add(createUserDto: CreateUserDto): Promise<any>;
     query(request: Request): Promise<{
         records: import("./entities/user.entity").User[];
         total: number;

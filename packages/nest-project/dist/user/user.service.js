@@ -39,7 +39,6 @@ let UserService = class UserService {
     }
     detail(id) {
         return this.userRepository.findOne({
-            select: ['account', 'password', 'id', 'nickName'],
             where: {
                 id,
             }

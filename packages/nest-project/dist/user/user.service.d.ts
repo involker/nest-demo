@@ -1,10 +1,11 @@
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import Page from "../interface/page";
+import { CreateUserDto } from "./dto/create-user.dto";
 export declare class UserService {
     private userRepository;
     constructor(userRepository: Repository<User>);
-    add(user: User): Promise<import("typeorm").InsertResult>;
+    add(user: CreateUserDto): Promise<import("typeorm").InsertResult>;
     query(user: User, page: Page): Promise<[User[], number]>;
     update(user: User): Promise<{
         updateTime: Date;
