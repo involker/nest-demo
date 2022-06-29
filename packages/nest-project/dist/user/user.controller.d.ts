@@ -7,4 +7,5 @@ export declare class UserController {
     query(request: Request, res: Response): Promise<void>;
     update(request: Request, res: Response): Promise<void>;
     del(request: Request, res: Response): Promise<void>;
+    detail(request: Request, res: Response): Promise<void>;
 }

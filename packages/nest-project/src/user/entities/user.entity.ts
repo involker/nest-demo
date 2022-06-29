@@ -7,4 +7,6 @@ export class User {
   account: string;
   @Column()
   password: string;
+  @Column()
+  nickName: string;
 }

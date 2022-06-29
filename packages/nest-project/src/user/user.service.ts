@@ -9,18 +9,29 @@ export class UserService {
     private userRepository: Repository<User>,
   ) { }
 
-  async add(user: User) {
+  add(user: User) {
     return this.userRepository.insert(user);
   }
-  async query() {
+  query(user: User) {
     return this.userRepository.find({
-      select: ['account', 'password', 'id'],
+      select: ['account', 'password', 'id', 'nickName'],
+      where: {
+        account: user.account || null
+      }
     });
   }
-  async update(user: User) {
+  update(user: User) {
     return this.userRepository.save(user);
   }
   del(user: User) {
     return this.userRepository.delete(user);
+  }
+  detail(id: number) {
+    return this.userRepository.findOne({
+      select: ['account', 'password', 'id', 'nickName'],
+      where: {
+        id,
+      }
+    })
   }
 }

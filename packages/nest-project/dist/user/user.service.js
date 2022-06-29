@@ -19,19 +19,30 @@ let UserService = class UserService {
     constructor(userRepository) {
         this.userRepository = userRepository;
     }
-    async add(user) {
+    add(user) {
         return this.userRepository.insert(user);
     }
-    async query() {
+    query(user) {
         return this.userRepository.find({
-            select: ['account', 'password', 'id'],
+            select: ['account', 'password', 'id', 'nickName'],
+            where: {
+                account: user.account || null
+            }
         });
     }
-    async update(user) {
+    update(user) {
         return this.userRepository.save(user);
     }
     del(user) {
         return this.userRepository.delete(user);
+    }
+    detail(id) {
+        return this.userRepository.findOne({
+            select: ['account', 'password', 'id', 'nickName'],
+            where: {
+                id,
+            }
+        });
     }
 };
 UserService = __decorate([

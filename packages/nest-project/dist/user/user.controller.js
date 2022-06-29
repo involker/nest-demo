@@ -24,7 +24,7 @@ let UserController = class UserController {
         res.send({ rspDesc: '操作成功', data: null, rspCode: 'success' });
     }
     async query(request, res) {
-        const result = await this.userService.query();
+        const result = await this.userService.query(request.body);
         res.send({ rspDesc: '操作成功', data: result, rspCode: 'success' });
     }
     async update(request, res) {
@@ -34,6 +34,10 @@ let UserController = class UserController {
     async del(request, res) {
         await this.userService.del(request.body);
         res.send({ rspDesc: '操作成功', data: null, rspCode: 'success' });
+    }
+    async detail(request, res) {
+        const result = await this.userService.detail(request.body.id);
+        res.send({ rspDesc: '操作成功', data: result, rspCode: 'success' });
     }
 };
 __decorate([
@@ -72,6 +76,15 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "del", null);
+__decorate([
+    (0, common_1.Post)('detail'),
+    (0, common_1.HttpCode)(200),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "detail", null);
 UserController = __decorate([
     (0, common_1.Controller)('user'),
     __metadata("design:paramtypes", [user_service_1.UserService])

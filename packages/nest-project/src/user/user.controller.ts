@@ -14,7 +14,7 @@ export class UserController {
   @Post('query')
   @HttpCode(200)
   async query(@Req() request: Request, @Res() res: Response) {
-    const result = await this.userService.query();
+    const result = await this.userService.query(request.body);
     res.send({ rspDesc: '操作成功', data: result, rspCode: 'success' });
   }
   @Post('update')
@@ -28,5 +28,11 @@ export class UserController {
   async del(@Req() request: Request, @Res() res: Response) {
     await this.userService.del(request.body);
     res.send({ rspDesc: '操作成功', data: null, rspCode: 'success' });
+  }
+  @Post('detail')
+  @HttpCode(200)
+  async detail(@Req() request: Request, @Res() res: Response) {
+    const result = await this.userService.detail(request.body.id);
+    res.send({ rspDesc: '操作成功', data: result, rspCode: 'success' });
   }
 }
