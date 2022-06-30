@@ -1,5 +1,6 @@
 import axios from "axios";
 import Qs from "qs";
+import { Message } from "@arco-design/web-vue"
 
 axios.defaults.baseURL = "/api";
 axios.defaults.timeout = 20000;
@@ -23,9 +24,14 @@ axios.interceptors.request.use(
 // response 拦截器
 axios.interceptors.response.use(
   (response) => {
-    return response.data;
+    if (response.data.rspCode === "success") {
+      return response.data;
+    }
+    Promise.reject(response.data)
   },
-  () => {
+  (error) => {
+    console.log(error);
+    Message.error(error.message)
   }
 );
 axios.postApi = function (url, params, opts = {}) {

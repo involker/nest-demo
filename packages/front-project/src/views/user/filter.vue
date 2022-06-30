@@ -3,6 +3,9 @@
     <a-form-item field="account" label="账号：">
       <a-input v-model="filter.account" />
     </a-form-item>
+    <a-form-item field="nickName" label="昵称：">
+      <a-input v-model="filter.nickName" />
+    </a-form-item>
     <a-form-item>
       <a-button @click="onSearch" type="primary">查询</a-button>
       <a-button @click="onReset" style="margin-left: 10px">重置</a-button>
@@ -15,6 +18,7 @@ export default {
     return {
       filter: {
         account: "",
+        nickName: "",
       },
     };
   },

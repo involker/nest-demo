@@ -4,7 +4,7 @@
     <div>
       <a-button type="primary" @click="onAdd">添加用户</a-button>
     </div>
-    <a-table :columns="columns" :data="list" :pagination="false">
+    <a-table :columns="columns" :data="list" :pagination="false" bordered>
       <template #op="{ record }">
         <a-popconfirm content="确定删除?" @ok="onDel(record)">
           <a-button status="danger">删除</a-button>
@@ -17,8 +17,18 @@
         >
       </template>
     </a-table>
-    <a-pagination :total="page.total" v-model="page.current" :page-size="page.size" @change="onPageChange"/>
-    <a-modal :visible="visible" title="新增" @cancel="onClose" :footer="false">
+    <a-pagination
+      :total="page.total"
+      v-model="page.current"
+      :page-size="page.size"
+      @change="onPageChange"
+    />
+    <a-modal
+      :visible="visible"
+      :title="title"
+      @cancel="onClose"
+      :footer="false"
+    >
       <dialogForm @close="onClose" :injectData="dialogData" v-if="visible" />
     </a-modal>
   </div>
@@ -35,6 +45,7 @@ export default {
   },
   data() {
     return {
+      title: "",
       page: {
         current: 1,
         size: 10,
@@ -45,11 +56,16 @@ export default {
       list: [],
       columns: [
         {
-          title: "id",
-          dataIndex: "id",
+          title: "序号",
+          align: "center",
+          dataIndex: "rowIndex",
+          render({ rowIndex }) {
+            return rowIndex + 1;
+          },
         },
         {
           title: "账号",
+          align: "center",
           dataIndex: "account",
           render({ record }) {
             return record.account || "-";
@@ -57,18 +73,23 @@ export default {
         },
         {
           title: "昵称",
+          align: "center",
           dataIndex: "nickName",
         },
         {
           title: "创建时间",
+          align: "center",
+
           dataIndex: "createTime",
         },
         {
           title: "更新时间",
+          align: "center",
           dataIndex: "updateTime",
         },
         {
           title: "操作",
+          align: "center",
           slotName: "op",
         },
       ],
@@ -87,16 +108,19 @@ export default {
         id: row.id,
       });
       this.visible = true;
+      this.title = "编辑";
       this.dialogData = { ...res.data, isEdit: true };
     },
     onAdd() {
       this.visible = true;
+      this.title = "新增";
+      this.dialogData = {};
     },
     async onDel(row) {
       const res = await UserApi.delUser({ id: row.id });
       this.getList();
     },
-    onPageChange(current){
+    onPageChange(current) {
       this.page.current = current;
       this.onSearch();
     },
