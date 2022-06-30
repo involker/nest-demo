@@ -43,6 +43,10 @@ __decorate([
     }),
     __metadata("design:type", Date)
 ], User.prototype, "updateTime", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], User.prototype, "avatr", void 0);
 User = __decorate([
     (0, typeorm_1.Entity)()
 ], User);

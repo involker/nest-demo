@@ -5,7 +5,7 @@ export class User {
   id: number;
 
   @Column({
-    unique:true
+    unique: true
   })
   account: string;
 
@@ -24,4 +24,7 @@ export class User {
     comment: "更新时间"
   })
   updateTime: Date;
+
+  @Column()
+  avatr: string;
 }

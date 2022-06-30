@@ -14,6 +14,7 @@ export declare class UserService {
         account?: string;
         nickName?: string;
         password?: string;
+        avatr?: string;
     } & User>;
     del(user: User): Promise<import("typeorm").DeleteResult>;
     detail(id: number): Promise<User>;

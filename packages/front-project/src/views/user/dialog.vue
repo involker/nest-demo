@@ -10,6 +10,18 @@
       <a-form-item field="password" label="密码：" required>
         <a-input v-model="form.password"></a-input>
       </a-form-item>
+      <a-form-item field="avatr" label="头像：" required>
+        <a-upload :custom-request="customRequest" :show-file-list="false">
+          <template #upload-button>
+            <img
+              :src="form.avatr"
+              v-if="form.avatr"
+              style="width: 100px; height: 100px"
+            />
+            <a-button v-else>上传</a-button>
+          </template>
+        </a-upload>
+      </a-form-item>
     </a-form>
     <div style="text-align: center">
       <a-button @click="$emit('close')">取消</a-button>
@@ -29,6 +41,7 @@ export default {
         account: "",
         password: "",
         nickName: "",
+        avatr: "",
       },
     };
   },
@@ -45,6 +58,14 @@ export default {
     }
   },
   methods: {
+    async customRequest(option) {
+      const { fileItem } = option;
+      const formData = new FormData();
+      formData.append("file", fileItem.file);
+      const res = await UserApi.uploadImage(formData);
+      this.form.avatr = res.data.url;
+      this.$refs.form.validateField('avatr')
+    },
     submit() {
       this.$refs.form.validate(async (valid) => {
         let res = {};
@@ -56,7 +77,7 @@ export default {
         } else {
           res = await UserApi.addUser(this.form);
         }
-        this.$message.success(res.rspDesc)
+        this.$message.success(res.rspDesc);
         this.$emit("close", true);
       });
     },

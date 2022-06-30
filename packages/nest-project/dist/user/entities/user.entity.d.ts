@@ -5,4 +5,5 @@ export declare class User {
     nickName: string;
     createTime: Date;
     updateTime: Date;
+    avatr: string;
 }

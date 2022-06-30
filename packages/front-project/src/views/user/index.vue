@@ -5,6 +5,9 @@
       <a-button type="primary" @click="onAdd">添加用户</a-button>
     </div>
     <a-table :columns="columns" :data="list" :pagination="false" bordered>
+      <template #avatr="{ record }">
+        <a-image v-if="record.avatr" width="50" :src="record.avatr" />
+      </template>
       <template #op="{ record }">
         <a-popconfirm content="确定删除?" @ok="onDel(record)">
           <a-button status="danger">删除</a-button>
@@ -75,6 +78,12 @@ export default {
           title: "昵称",
           align: "center",
           dataIndex: "nickName",
+        },
+        {
+          title: "头像",
+          align: "center",
+          dataIndex: "avatr",
+          slotName: "avatr",
         },
         {
           title: "创建时间",
