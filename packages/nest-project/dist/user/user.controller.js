@@ -16,6 +16,7 @@ exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
 const user_service_1 = require("./user.service");
 const create_user_dto_1 = require("./dto/create-user.dto");
+const update_user_dto_1 = require("./dto/update-user.dto");
 const validation_pipe_1 = require("./validation.pipe");
 let UserController = class UserController {
     constructor(userService) {
@@ -35,8 +36,8 @@ let UserController = class UserController {
             size
         };
     }
-    async update(request) {
-        await this.userService.update(request.body);
+    async update(updateUserDto) {
+        await this.userService.update(updateUserDto);
         return null;
     }
     async del(request) {
@@ -67,9 +68,9 @@ __decorate([
 __decorate([
     (0, common_1.Post)('update'),
     (0, common_1.HttpCode)(200),
-    __param(0, (0, common_1.Req)()),
+    __param(0, (0, common_1.Body)(new validation_pipe_1.ValidationPipe())),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [update_user_dto_1.UpdateUserDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "update", null);
 __decorate([

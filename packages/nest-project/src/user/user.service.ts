@@ -3,6 +3,7 @@ import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import Page from "../interface/page";
 import { CreateUserDto } from "./dto/create-user.dto"
+import { UpdateUserDto } from "./dto/update-user.dto";
 
 @Injectable()
 export class UserService {
@@ -17,13 +18,17 @@ export class UserService {
   query(user: User, page: Page) {
     return this.userRepository.findAndCount({
       where: {
-        account: user.account || null
+        account: user.account || null,
+        nickName: user.nickName || null
       },
       skip: (page.size) * (page.current - 1),
-      take: page.size
+      take: page.size,
+      order: {
+        updateTime: "desc"
+      }
     });
   }
-  update(user: User) {
+  update(user: UpdateUserDto) {
     return this.userRepository.save({ ...user, updateTime: new Date() });
   }
   del(user: User) {

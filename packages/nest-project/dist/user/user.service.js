@@ -25,10 +25,14 @@ let UserService = class UserService {
     query(user, page) {
         return this.userRepository.findAndCount({
             where: {
-                account: user.account || null
+                account: user.account || null,
+                nickName: user.nickName || null
             },
             skip: (page.size) * (page.current - 1),
-            take: page.size
+            take: page.size,
+            order: {
+                updateTime: "desc"
+            }
         });
     }
     update(user) {
