@@ -16,7 +16,7 @@ const create_user_dto_1 = require("./create-user.dto");
 class UpdateUserDto extends (0, mapped_types_1.PartialType)(create_user_dto_1.CreateUserDto) {
 }
 __decorate([
-    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
 ], UpdateUserDto.prototype, "id", void 0);
 exports.UpdateUserDto = UpdateUserDto;

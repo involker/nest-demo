@@ -13,10 +13,12 @@ let HttpExecptionFilter = class HttpExecptionFilter {
         const ctx = host.switchToHttp();
         const response = ctx.getResponse();
         const status = exception.getStatus();
-        const rspDesc = JSON.stringify(exception.getResponse());
+        const data = exception.getResponse() || {};
+        console.log(data);
         response.status(status).json({
-            rspDesc,
-            rspCode: "fail"
+            rspDesc: data.message,
+            rspCode: "fail",
+            data: data.data
         });
     }
 };

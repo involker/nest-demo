@@ -6,4 +6,5 @@ export declare class User {
     createTime: Date;
     updateTime: Date;
     avatr: string;
+    encryptPwd(): Promise<void>;
 }

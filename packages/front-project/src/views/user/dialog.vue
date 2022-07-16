@@ -32,7 +32,6 @@
   </div>
 </template>
 <script>
-import * as UserApi from "@/api/user.js";
 
 export default {
   data() {
@@ -75,7 +74,7 @@ export default {
             id: this.injectData.id,
           });
         } else {
-          res = await UserApi.addUser(this.form);
+          res = await this.$api.addUser(this.form);
         }
         this.$message.success(res.rspDesc);
         this.$emit("close", true);

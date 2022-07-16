@@ -15,12 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("typeorm");
+const user_entity_1 = require("./entities/user.entity");
 let UserService = class UserService {
     constructor(userRepository) {
         this.userRepository = userRepository;
     }
     add(user) {
-        return this.userRepository.insert(user);
+        const entity = Object.assign(new user_entity_1.User(), user);
+        return this.userRepository.insert(entity);
     }
     query(user, page) {
         return this.userRepository.findAndCount({
@@ -36,7 +38,8 @@ let UserService = class UserService {
         });
     }
     update(user) {
-        return this.userRepository.save(Object.assign(Object.assign({}, user), { updateTime: new Date() }));
+        const entity = Object.assign(new user_entity_1.User(), Object.assign(Object.assign({}, user), { updateTime: new Date() }));
+        return this.userRepository.save(entity);
     }
     del(user) {
         return this.userRepository.delete(user);
@@ -45,6 +48,28 @@ let UserService = class UserService {
         return this.userRepository.findOne({
             where: {
                 id,
+            }
+        });
+    }
+    login(user) {
+        return this.userRepository.findOne({
+            where: {
+                account: user.account,
+                password: user.password
+            }
+        });
+    }
+    async findOne(account) {
+        return this.userRepository.findOne({
+            where: {
+                account
+            }
+        });
+    }
+    async findById(id) {
+        return this.userRepository.findOne({
+            where: {
+                id
             }
         });
     }

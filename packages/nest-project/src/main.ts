@@ -7,7 +7,8 @@ import { join } from 'path';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   // app.enableCors();
-  app.use('/public', serveStatic(join(__dirname,'../public'), {
+  //静态文件目录
+  app.use('/public', serveStatic(join(__dirname, '../public'), {
     maxAge: '1d',
     extensions: ['jpg', 'jpeg', 'png', 'gif'],
   }));

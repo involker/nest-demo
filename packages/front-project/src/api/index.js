@@ -1,5 +1,11 @@
 import request from "@/request"
 
+export function login(params) {
+  return request.post('/auth/login', params);
+}
+export function getCurrentUser(params) {
+  return request.post('/getCurrentUser', params);
+}
 export function getUserList(params) {
   return request.post('/user/query', params);
 }

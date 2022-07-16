@@ -39,7 +39,6 @@
 <script>
 import dataFilter from "./filter.vue";
 import dialogForm from "./dialog";
-import * as UserApi from "@/api/user.js";
 
 export default {
   components: {
@@ -113,7 +112,7 @@ export default {
       flag && this.getList();
     },
     async onEdit(row) {
-      const res = await UserApi.getUserDetail({
+      const res = await this.$api.getUserDetail({
         id: row.id,
       });
       this.visible = true;
@@ -126,7 +125,7 @@ export default {
       this.dialogData = {};
     },
     async onDel(row) {
-      const res = await UserApi.delUser({ id: row.id });
+      const res = await this.$api.delUser({ id: row.id });
       this.getList();
     },
     onPageChange(current) {
@@ -139,7 +138,7 @@ export default {
       this.getList();
     },
     async getList() {
-      const res = await UserApi.getUserList(this.filter);
+      const res = await this.$api.getUserList(this.filter);
       this.list = res.data.records || [];
       this.page.current = res.data.current;
       this.page.size = res.data.size;

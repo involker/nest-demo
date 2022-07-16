@@ -7,10 +7,12 @@ export class HttpExecptionFilter<T> implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const status = exception.getStatus();
-    const rspDesc = JSON.stringify(exception.getResponse());
+    const data: any = exception.getResponse() || {};
+    console.log(data);
     response.status(status).json({
-      rspDesc,
-      rspCode: "fail"
+      rspDesc: data.message,
+      rspCode: "fail",
+      data: data.data
     });
   }
 }

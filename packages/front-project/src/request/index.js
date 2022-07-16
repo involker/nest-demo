@@ -15,6 +15,10 @@ axios.defaults.headers.post["Content-Type"] =
  */
 axios.interceptors.request.use(
   (config) => {
+    const token = window.localStorage.getItem("token");
+    config.headers = {
+      Authorization:`Bearer ${token}`
+    }
     return config;
   },
   (error) => {
@@ -24,10 +28,12 @@ axios.interceptors.request.use(
 // response 拦截器
 axios.interceptors.response.use(
   (response) => {
-    if (response.data.rspCode === "success") {
-      return response.data;
+    const { data } = response;
+    if (data.rspCode === "success") {
+      return data;
+    } else {
+      Message.error(data.rspDesc)
     }
-    Promise.reject(response.data)
   },
   (error) => {
     console.log(error);

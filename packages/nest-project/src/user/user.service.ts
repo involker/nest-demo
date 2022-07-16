@@ -13,7 +13,8 @@ export class UserService {
   ) { }
 
   add(user: CreateUserDto) {
-    return this.userRepository.insert(user);
+    const entity = Object.assign(new User(), user);
+    return this.userRepository.insert(entity);
   }
   query(user: User, page: Page) {
     return this.userRepository.findAndCount({
@@ -29,9 +30,12 @@ export class UserService {
     });
   }
   update(user: UpdateUserDto) {
-    return this.userRepository.save({ ...user, updateTime: new Date() });
+    const entity = Object.assign(new User(), {
+      ...user, updateTime: new Date()
+    });
+    return this.userRepository.save(entity);
   }
-  del(user: User) {
+  del(user: UpdateUserDto) {
     return this.userRepository.delete(user);
   }
   detail(id: number) {
@@ -40,5 +44,27 @@ export class UserService {
         id,
       }
     })
+  }
+  login(user: User) {
+    return this.userRepository.findOne({
+      where: {
+        account: user.account,
+        password: user.password
+      }
+    })
+  }
+  async findOne(account: string) {
+    return this.userRepository.findOne({
+      where: {
+        account
+      }
+    });
+  }
+  async findById(id: number) {
+    return this.userRepository.findOne({
+      where: {
+        id
+      }
+    });
   }
 }
