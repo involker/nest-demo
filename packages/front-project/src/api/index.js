@@ -26,3 +26,6 @@ export function uploadImage(params) {
     contentType: "multipart/form-data"
   });
 }
+export function addArticle(params){
+  return request.post('/article/add', params);
+}
